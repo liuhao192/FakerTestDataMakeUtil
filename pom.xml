@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ren.kura</groupId>
+    <artifactId>FakerTestDataMakeUtil</artifactId>
+    <version>1.2</version>
+    <name>对象数据模拟生成工具</name>
+    <description>
+        单元测试中，经常涉及生成对象，并模拟数据进行赋值，使用javafaker虽然可以省去一部分工作，但是如果属性过多还是比较繁琐、工作量重复
+        于是使用javafaker和reflectasm，只要两行代码快速生成测试的数据
+    </description>
+    <developers>
+        <developer>
+            <id>清水雅然君</id>
+            <name>liuhao</name>
+            <email>liuhao192@live.com</email>
+        </developer>
+    </developers>
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.github.javafaker/javafaker -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.esotericsoftware/reflectasm -->
+        <dependency>
+            <groupId>com.esotericsoftware</groupId>
+            <artifactId>reflectasm</artifactId>
+            <version>1.11.9</version>
+        </dependency>
+
+
+    </dependencies>
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+</project>
