@@ -4,17 +4,17 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * <p>文件名称: AbstractFakerTestDataMake.java
+ * <p>文件名称: AbstractFakeDataMaker.java
  * <p>描述: 工具的抽象类
  *
  * @author liuhao
  * @Date: 2021/9/16 10:37 下午
  * @since 1.0
  */
-public abstract class AbstractFakerTestDataMake {
+public abstract class AbstractFakeDataMaker {
 
     /**
-     * AbstractFakerTestDataMake:: makeString
+     * AbstractFakeDataMaker:: makeString
      * <p>TO:生成字符串类型的数据
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
@@ -24,7 +24,7 @@ public abstract class AbstractFakerTestDataMake {
     protected abstract String makeString(String fieldName);
 
     /**
-     * AbstractFakerTestDataMake:: makeInteger
+     * AbstractFakeDataMaker:: makeInteger
      * <p>TO:生成整型类型的数据
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
@@ -34,7 +34,7 @@ public abstract class AbstractFakerTestDataMake {
     protected abstract Integer makeInteger(String fieldName);
 
     /**
-     * AbstractFakerTestDataMake:: makeFloat
+     * AbstractFakeDataMaker:: makeFloat
      * <p>TO:生成单精度型的数据
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
@@ -44,7 +44,7 @@ public abstract class AbstractFakerTestDataMake {
     protected abstract Float makeFloat(String fieldName);
 
     /**
-     * AbstractFakerTestDataMake:: makeDouble
+     * AbstractFakeDataMaker:: makeDouble
      * <p>TO:生成双精度类型的数据
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
@@ -54,7 +54,7 @@ public abstract class AbstractFakerTestDataMake {
     protected abstract Double makeDouble(String fieldName);
 
     /**
-     * AbstractFakerTestDataMake:: makeLong
+     * AbstractFakeDataMaker:: makeLong
      * <p>TO:生成长整型的测试数据
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
@@ -64,7 +64,7 @@ public abstract class AbstractFakerTestDataMake {
     protected abstract Long makeLong(String fieldName);
 
     /**
-     * AbstractFakerTestDataMake:: makeDate
+     * AbstractFakeDataMaker:: makeDate
      * <p>TO:生成日期类型的测试数据
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
@@ -76,7 +76,7 @@ public abstract class AbstractFakerTestDataMake {
     ;
 
     /**
-     * AbstractFakerTestDataMake:: makeBoolean
+     * AbstractFakeDataMaker:: makeBoolean
      * <p>TO:生成布尔类型的测试疏浚
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
@@ -86,13 +86,13 @@ public abstract class AbstractFakerTestDataMake {
     protected abstract Boolean makeBoolean(String fieldName);
 
     /**
-     * AbstractFakerTestDataMake:: makeBigDecimal
+     * AbstractFakeDataMaker:: makeBigDecimal
      * <p>TO:生成高精度类型的测试数据
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
      * @param fieldName 字段名称
      * @return BigDecimal 高精度的BigDecimal数值数据
      */
-    protected abstract BigDecimal makeBigDecimal(String fieldName);
+    protected  abstract BigDecimal makeBigDecimal(String fieldName);
 
 }
