@@ -13,6 +13,7 @@ TestData.TestData1 testData1 = (TestData.TestData1) util.makeData(TestData.TestD
 这里也会存在无限嵌套的风险，在代码中 添加!field.getType().equals(testClass) 避免出现嵌套数据填充
 
 <p>3.不支持对集合类型数据的模拟和填充，对于集合类的数据的模拟，可以使用模拟对象的数据，再放入集合的方式，主要是模拟集合类型的数据的个数的问题
+    
 ```java
 public static void main(String[] args) {
     FakeDataMaker util = new FakeDataMaker();
@@ -28,7 +29,6 @@ public static void main(String[] args) {
     };
     TestData stringOnlyOneData = (TestData) stringOnlyOne.makeData(TestData.class);
     System.out.println(stringOnlyOneData.toString());
-
     //固定某个字段是唯一
     FakeDataMaker onlyFieldOne = new FakeDataMaker(){
         @Override
