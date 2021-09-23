@@ -47,6 +47,8 @@ public static void main(String[] args) {
 6.其他功能的实现-替换构造方法，初始化对象
 <p>我们在实际开发中，遇到需要初始化对象，并且给对象赋值为空值，如果使用构造方法或者静态方法得到新对象，都会代码量比较多，尤其是构建方法的赋值，会有多个入参，
 所以工具的提供一个构建空值对象的方法initEmptyObject，该方法中，字符类型为空字符串，数字类型默认为0，时间则为默认当前时间
+    
+    
 ```java
  TestData testData = (TestData) FakeDataMaker.initEmptyObject(TestData.class);
  打印
