@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 /**
  * <p>文件名称: FakerTestDataMakeUtil.java
@@ -27,10 +28,9 @@ import java.util.Map;
  * TestData.TestData1 testData1 = (TestData.TestData1) util.makeData(TestData.TestData1.class);
  * 这里也会存在无限嵌套的风险，在代码中 添加!field.getType().equals(testClass) 避免出现嵌套数据填充
  * <p>3.不支持对集合类型数据的模拟和填充，对于集合类的数据的模拟，可以使用模拟对象的数据，再放入集合的方式，主要是模拟集合类型的数据的个数的问题
- *
+ * <p>
  * 下一步，
  * 2.
- *
  *
  * @author liuhao
  * @Date: 2021/9/16 10:31 下午
@@ -52,6 +52,8 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
 
     private static final Map<String, Boolean> BASE_MAP = new HashMap(16);
 
+    private static FakeDataMaker EMPTY_OBJECT_MAKER = null;
+
     private static Boolean WARNING_FLAG = true;
 
     private Boolean INNER_FLAG = false;
@@ -64,7 +66,7 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
      *
      * @param innerFlag true 开启
      */
-    public  void setInnerFlag(Boolean innerFlag) {
+    public void setInnerFlag(Boolean innerFlag) {
         this.INNER_FLAG = innerFlag;
     }
 
@@ -78,6 +80,81 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
      */
     public final Object makeData(Class testClass) {
         return makeData(testClass, Locale.CHINA);
+    }
+
+
+    /**
+     * FakeDataMaker:: emptyObject
+     * <p>返回一个是空值的对象
+     * <p>DO:重写FakeDataMaker的构建值的方法，全部设置为空值，字符设置为""，数字为0,日期为当前的时间(默认当前北京时区)
+     * 默认开启内部类的值的注入
+     * <p>HISTORY: 2021/9/23 liuhao : Created
+     *
+     * @param testClass 需要生成对象的类
+     * @param innerFlag 内部类的注入标识
+     * @return Object  一个空值的对象
+     */
+    public final static Object initEmptyObject(Class testClass, Boolean innerFlag) {
+        if (EMPTY_OBJECT_MAKER == null || !EMPTY_OBJECT_MAKER.INNER_FLAG.equals(innerFlag)) {
+            EMPTY_OBJECT_MAKER = new FakeDataMaker() {
+                @Override
+                protected String makeString(String fieldName) {
+                    return "";
+                }
+
+                @Override
+                protected Integer makeInteger(String fieldName) {
+                    return 0;
+                }
+
+                @Override
+                protected Float makeFloat(String fieldName) {
+                    return 0F;
+                }
+
+                @Override
+                protected Double makeDouble(String fieldName) {
+                    return 0D;
+                }
+
+                @Override
+                protected Long makeLong(String fieldName) {
+                    return 0L;
+                }
+
+                @Override
+                protected Date makeDate(String fieldName) {
+                    //这里没设置缓存
+                    return new Date();
+                }
+
+                @Override
+                protected Boolean makeBoolean(String fieldName) {
+                    return Boolean.TRUE;
+                }
+
+                @Override
+                protected BigDecimal makeBigDecimal(String fieldName) {
+                    return BigDecimal.ZERO;
+                }
+            };
+            EMPTY_OBJECT_MAKER.setInnerFlag(innerFlag);
+        }
+        return EMPTY_OBJECT_MAKER.makeData(testClass);
+    }
+
+    /**
+     * FakeDataMaker:: emptyObject
+     * <p>返回一个是空值的对象
+     * <p>DO:重写FakeDataMaker的构建值的方法，全部设置为空值，字符设置为""，数字为0,日期为当前的时间(默认当前北京时区)
+     * 默认开启内部类的值的注入
+     * <p>HISTORY: 2021/9/23 liuhao : Created
+     *
+     * @param testClass 需要生成对象的类
+     * @return Object  一个空值的对象
+     */
+    public final static Object initEmptyObject(Class testClass) {
+        return initEmptyObject(testClass, true);
     }
 
     /**
@@ -135,7 +212,6 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
                 if (baseValue == null) {
                     baseValue = !baseClass(field.getType()) && !field.getType().equals(testClass)
                             && Modifier.toString(field.getType().getModifiers()).contains("static");
-                    System.out.println(baseValue);
                     BASE_MAP.put(get_key, baseValue);
                 }
                 if (baseValue) {
@@ -143,11 +219,9 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
                     testAccess.invoke(testObject, set_index, baseClassValue);
                 }
             }
+
             if (field.getType() == String.class) {
-                if (set_index == null) {
-                    set_index = testAccess.getIndex(GET_METHOD + StringUtils.capitalize(field.getName()));
-                    testAccess.invoke(testObject, set_index, makeString(field.getName()));
-                }
+                testAccess.invoke(testObject, set_index, makeString(field.getName()));
             }
             if (field.getType() == Integer.class || field.getType() == int.class) {
                 testAccess.invoke(testObject, set_index, makeInteger(field.getName()));
