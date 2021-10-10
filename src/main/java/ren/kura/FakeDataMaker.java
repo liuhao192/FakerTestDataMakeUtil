@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * <p>文件名称: FakerTestDataMakeUtil.java
@@ -29,8 +28,7 @@ import java.util.TimeZone;
  * 这里也会存在无限嵌套的风险，在代码中 添加!field.getType().equals(testClass) 避免出现嵌套数据填充
  * <p>3.不支持对集合类型数据的模拟和填充，对于集合类的数据的模拟，可以使用模拟对象的数据，再放入集合的方式，主要是模拟集合类型的数据的个数的问题
  * <p>
- * 下一步，
- * 2.
+
  *
  * @author liuhao
  * @Date: 2021/9/16 10:31 下午
@@ -57,6 +55,7 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
     private static Boolean WARNING_FLAG = true;
 
     private Boolean INNER_FLAG = false;
+
 
 
     /**
@@ -170,6 +169,15 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
         if (faker == null) {
             faker = new Faker(locale);
         }
+        //基础类型的参数构建
+        if (baseClass(testClass)) {
+            if (WARNING_FLAG) {
+                System.err.println("建议直接使用Java—faker生成基础类数据");
+                WARNING_FLAG = false;
+            }
+            return baseClassValue(testClass, new Object());
+        }
+
         //构建对象
         ConstructorAccess constructorAccess = CONSTRUCTOR_ACCESS_MAP.get(testClass);
         if (constructorAccess == null) {
@@ -177,14 +185,7 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
             CONSTRUCTOR_ACCESS_MAP.put(testClass, constructorAccess);
         }
         Object testObject = constructorAccess.newInstance();
-        //基础类型的参数构建
-        if (baseClass(testClass)) {
-            if (WARNING_FLAG) {
-                System.err.println("建议直接使用Java—faker生成基础类数据");
-                WARNING_FLAG = false;
-            }
-            return baseClassValue(testClass, testObject);
-        }
+
         //获取到类的方法
         MethodAccess testAccess = METHOD_ACCESS_MAP.get(testClass);
         if (testAccess == null) {
@@ -254,7 +255,7 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
             testObject = makeString(null);
         }
         if (testClass == Integer.class || testClass == int.class) {
-            testObject = makeString(null);
+            testObject = makeInteger(null);
         }
         if (testClass == Float.class || testClass == float.class) {
             testObject = makeFloat(null);
@@ -345,5 +346,6 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
         return clazz.isPrimitive() || clazz.getPackage().getName().startsWith("java") ||
                 clazz.getPackage().getName().startsWith("javax");
     }
+
 
 }

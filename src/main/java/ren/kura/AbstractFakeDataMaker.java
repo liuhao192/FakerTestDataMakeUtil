@@ -77,7 +77,8 @@ public abstract class AbstractFakeDataMaker {
 
     /**
      * AbstractFakeDataMaker:: makeBoolean
-     * <p>TO:生成布尔类型的测试疏浚
+     * <p>TO:生成布尔类型的测试数据
+     *
      * <p>HISTORY: 2021/9/16 liuhao : Created.
      *
      * @param fieldName 字段名称
