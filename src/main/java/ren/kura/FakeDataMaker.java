@@ -261,19 +261,19 @@ public class FakeDataMaker extends AbstractFakeDataMaker {
             testObject = makeFloat(null);
         }
         if (testClass == Double.class || testClass == double.class) {
-            testObject = makeString(null);
+            testObject = makeDouble(null);
         }
         if (testClass == Long.class || testClass == long.class) {
-            testObject = makeString(null);
+            testObject = makeLong(null);
         }
         if (testClass == Date.class) {
-            testObject = makeString(null);
+            testObject = makeDate(null);
         }
         if (testClass == Boolean.class || testClass == boolean.class) {
-            testObject = makeString(null);
+            testObject = makeBoolean(null);
         }
         if (testClass == BigDecimal.class) {
-            testObject = makeString(null);
+            testObject = makeBigDecimal(null);
         }
         return testObject;
     }
